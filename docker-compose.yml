@@ -1,0 +1,27 @@
+version: '3.1'
+services:
+  influxdb:
+    image: influxdb:1.8
+    container_name: influxdb
+    restart: unless-stopped
+    volumes:
+      - influxdb_data:/var/lib/influxdb
+    ports:
+      - 8083:8083
+      - 8086:8086
+      - 8090:8090
+    environment:
+      - INFLUXDB_DATA_ENGINE=tsm1
+      - INFLUXDB_REPORTING_DISABLED=false
+  grafana:
+    image: grafana/grafana:latest
+    restart: unless-stopped
+    container_name: grafana
+    volumes:
+      - grafana_data:/var/lib/grafana
+    ports:
+      - 3000:3000
+    user: "104"
+volumes:
+    influxdb_data: {}
+    grafana_data: {}
